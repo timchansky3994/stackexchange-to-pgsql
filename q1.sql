@@ -58,7 +58,7 @@ SELECT
     qa.Tag1,
     qa.Tag2,
     qa.PairFrequency,
-    AVG(EXTRACT(EPOCH FROM (qa.AnswerDate - qa.QuestionDate))) AS AvgResponseTimeSeconds,
+    AVG(qa.AnswerDate - qa.QuestionDate) AS AvgResponseTimeSeconds,
     AVG(qa.AnswererReputation) AS AvgAnswererReputation,
     COUNT(DISTINCT qa.QuestionId) AS QuestionsCount,
     COUNT(qa.AnswerId) AS AnswersCount
