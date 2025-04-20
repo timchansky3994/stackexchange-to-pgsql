@@ -4,8 +4,6 @@ from getpass import getpass
 import xml.etree.ElementTree as ET
 import psycopg2
 from psycopg2.extras import execute_batch
-import html
-from datetime import datetime
 
 
 def import_xml_to_postgres(xml_file, table_name, schema_name, db_params, batch_size=1000):
@@ -29,32 +27,6 @@ def import_xml_to_postgres(xml_file, table_name, schema_name, db_params, batch_s
     for event, elem in ET.iterparse(xml_file, events=('end',)):
         if elem.tag == 'row':
             row_data = dict((k.lower(), v) for k, v in elem.attrib.items())
-            # for col in columns:
-            #     value = elem.get(col)
-            #
-            #     # Handle NULL values
-            #     if value is None:
-            #         row_data[col] = None
-            #         continue
-            #
-            #     # Type conversion based on PostgreSQL schema
-            #     col_type = columns[col]
-            #     try:
-            #         if col_type == 'integer':
-            #             row_data[col] = int(value)
-            #         elif col_type == 'timestamp without time zone':
-            #             row_data[col] = datetime.fromisoformat(value.replace('Z', ''))
-            #         elif col_type == 'boolean':
-            #             row_data[col] = (value.lower() == 'true')
-            #         elif col_type == 'text':
-            #             # Unescape HTML entities and clean up
-            #             row_data[col] = html.unescape(value).strip()
-            #         else:
-            #             row_data[col] = value
-            #     except (ValueError, TypeError) as e:
-            #         print(f"Error converting {col}={value} to {col_type}: {e}")
-            #         row_data[col] = None
-
             data.append(row_data)
             elem.clear()
 
